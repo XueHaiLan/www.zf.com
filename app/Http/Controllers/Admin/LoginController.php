@@ -18,6 +18,10 @@ class LoginController extends Controller
             'password'=>'required'
         ]);
         $bool=auth()->attempt($data);
-        dump(auth()->user());
+//        dump(auth()->user()->id);exit();
+        if(!$bool){
+            return redirect(route('admin.login'))->withErrors(['error'=>"登录失败,账户或密码错误"]);
+        }
+        return redirect(route('admin.index'));
     }
 }

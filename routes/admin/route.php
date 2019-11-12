@@ -1,5 +1,25 @@
 <?php
 Route::group(['prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
+    //登录页路由
     Route::get('login','LoginController@index')->name('login');
     Route::post('login','LoginController@logins')->name('logins');
+    //首页路由
+    Route::group(['middleware'=>'checkadmin'],function(){
+        //展示页面
+        Route::get('index','IndexController@index')->name('index');
+        //欢迎页
+        Route::get('welcome','IndexController@welcome')->name('welcome');
+        //退出按钮
+        Route::get('logout','IndexController@logout')->name('logout');
+        //用户管理页面
+        Route::get('user','AdminController@index')->name('user');
+        //添加用户页面
+        Route::get('user/add','AdminController@add')->name('add');
+        //添加用户操作
+        Route::post('user/add','AdminController@create')->name('create');
+        //修改页面展示
+        Route::get('user/edit/{id}','AdminController@edit')->name('edit');
+        //修改页面提交
+        Route::put('user/update/{id}','AdminController@update')->name('update');
+    });
 });

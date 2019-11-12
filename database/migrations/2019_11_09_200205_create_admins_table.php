@@ -24,6 +24,7 @@ class CreateAdminsTable extends Migration
             $table->enum('sex',['先生','女士'])->default('先生')->comment('性别');
             $table->char('last_ip',15)->default('')->comment('ip地址');
             $table->timestamps();
+            $table->rememberToken();
             //软删除 生成一段字 deleted_at字段
             $table->softDeletes();
         });

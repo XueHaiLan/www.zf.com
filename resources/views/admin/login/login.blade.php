@@ -21,11 +21,7 @@
 <div class="header"></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
-      @if($errors->any())
-          @foreach($errors->all() as $error)
-              <li>{{ $error }}</li>
-          @endforeach
-      @endif
+    @include("admin.public.msg")
     <form class="form form-horizontal" action="{{ route('admin.logins') }}" method="post">
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
