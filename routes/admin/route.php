@@ -21,5 +21,14 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
         Route::get('user/edit/{id}','AdminController@edit')->name('edit');
         //修改页面提交
         Route::put('user/update/{id}','AdminController@update')->name('update');
+        //删除用户操作
+        Route::delete('user/del/{id}','AdminController@delete')->name('del');
+        //批量删除
+        Route::delete('user/dell','AdminController@dell')->name('dell');
+        //恢复用户
+        Route::get('user/restore','AdminController@restore')->name('restore');
+        //权限资源路由
+        Route::resource('role','RoleController');
+        Route::resource('node','NodeController');
     });
 });

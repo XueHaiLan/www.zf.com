@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use mysql_xdevapi\Result;
 use validator;
+use Mail;
+use Illuminate\Mail\Message;
 class AdminController extends BaseController
 {
     //用户页面展示
@@ -65,5 +68,41 @@ class AdminController extends BaseController
         return redirect(route('admin.index'));
 
 //        dump($model);
+    }
+    //删除用户操作
+    public function delete(int $id,Request $request)
+    {
+        $data=Admin::destroy($id);
+//        dump($data);exit();
+//        $data=1;
+        if($data){
+            return ['status'=>0,'msg'=>'删除成功'];
+        }else{
+            return ['status'=>1,'msg'=>'删除失败'];
+        }
+    }
+    //批量删除
+    public function dell(Request $request)
+    {
+        $ids=$request->get('ids');
+//        return $ids;
+        $data=Admin::destroy($ids);
+        if($data){
+            return ['status'=>0,'msg'=>'删除成功'];
+        }else{
+            return ['status'=>1,'msg'=>'删除失败'];
+        }
+    }
+    //激活
+    public function restore(Request $request)
+    {
+        $id=$request->get('id');
+        $data=Admin::where('id',$id)->onlyTrashed()->restore();
+//        return $data;
+        if($data){
+            return ['status'=>0,'msg'=>'修改成功'];
+        }else{
+            return ['status'=>1,'msg'=>'修改失败'];
+        }
     }
 }

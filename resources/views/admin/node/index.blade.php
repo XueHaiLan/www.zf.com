@@ -16,36 +16,30 @@
         <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
     </div>
     </form>
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="{{ route('admin.add')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="{{ route('admin.node.create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
     <table class="table table-border table-bordered table-bg">
         <thead>
         <tr class="text-c">
             <th width="25"><input type="checkbox" name="" value=""></th>
             <th width="40">ID</th>
-            <th width="150">登录名</th>
-            <th width="90">手机</th>
-            <th width="150">邮箱</th>
-            <th width="150">昵称</th>
-            <th width="130">加入时间</th>
-            <th width="90">状态</th>
+            <th width="150">节点名称</th>
+            <th width="150">路由名称</th>
+            <th width="150">是否菜单</th>
             <th width="100">操作</th>
         </tr>
         </thead>
         <tbody>
         @foreach( $data as $item)
         <tr class="text-c">
-            <td><input type="checkbox" value="{{ $item->id }}" name="ids[]"></td>
+            <td><input type="checkbox" value="{{ $item['id'] }}" name="ids[]"></td>
             <td>{{ $item['id'] }}</td>
-            <td>{{ $item['username'] }}</td>
-            <td>{{ $item['phone'] }}</td>
-            <td>{{ $item['email'] }}</td>
-            <td>{{ $item['truename'] }}</td>
-            <td>{{ $item['created_at'] }}</td>
+            <td>{{ $item['html'] }}{{ $item['name'] }}</td>
+            <td>{{ $item['route_name'] }}</td>
             <td>
-                @if($item['deleted_at'])
-                    <a p-id="{{ $item->id }}" class="label label-success radius" onclick="changeUser(1,{{ $item->id }},this)">启用</a>
+                @if($item['is_menu']=='0')
+                    <span class="label label-warning radius">否</span>
                 @else
-                    <a p-id="{{ $item->id }}" class="label label-warning radius" onclick="changeUser(0,{{$item->id }},this)">禁用</a>
+                    <span class="label label-success radius">是</span>
                 @endif
             </td>
             <td class="td-manage">
@@ -57,7 +51,7 @@
         </tbody>
     </table>
 </div>
-{{$data->appends( request()->except('page'))->links()}}
+
 @endsection
 
 
@@ -66,78 +60,6 @@
 <script type="text/javascript" src="{{ staticAdminWeb() }}lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="{{ staticAdminWeb() }}lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-    function changeUser(status,id,obg){
-        console.log(id)
-        var idss=$(obg).attr('p-id');
-        if(status==0){
-            $.ajax({
-                url:"{{ route('admin.dell') }}",
-                type:"delete",
-                data:{
-                    _token:"{{ csrf_token() }}",
-                    ids:[id]
-                }
-            }).then(res=>{
-                $(obg).removeClass('label-warning').addClass('label-success').html('启用');
-                $(obg).removeAttr('onclick').attr('onclick',"changeUser(1,"+idss+",this)");
-            })
-        }else{
-            $.ajax({
-                url:"{{ route('admin.restore') }}",
-                data:{id}
-            }).then(res=>{
-                // console.log(res)
-                $(obg).removeClass('label-success').addClass('label-warning').html('禁用');
-                $(obg).removeAttr('onclick').attr('onclick',"changeUser(0,"+idss+",this)");
-            })
-        }
-    }
-    function datadel(){
-        var inputs=$('input[name="ids[]"]:checked');
-        // console.log(inputs);
-        var ids=[];
-        inputs.map((key,item)=>{
-            ids.push($(item).val())
-        })
-        // console.log(ids)
-        $.ajax({
-            url:"{{ route('admin.dell') }}",
-            type:'delete',
-            data:{_token:"{{ csrf_token() }}",ids}
-        }).then(res=>{
-            // console.log(res);
-            if(!res.status){
-                inputs.map((key,item)=>{
-                    $(item).parents('tr').remove();
-                })
-                layer.msg(res.msg,{icon:1,time:1000})
-            }else{
-                layer.msg(res.msg,{icon:5,time:1000})
-            }
-        })
-    }
-    $('#del').click(function (){
-        var url=$(this).attr('href')
-        // console.log(url)
-        layer.confirm('您确定要删除这个用户么?',{
-            bth:['确定','取消']
-        },()=>{
-            $.ajax({
-                url,
-                type:'delete',
-                data:{_token:"{{ csrf_token() }}"}
-            }).then(res=>{
-                // console.log(res.msg);
-                if(!res.status){
-                    $(this).parents('tr').remove();
-                    layer.msg(res.msg,{icon:1,time:1000})
-                }else{
-                    layer.msg(res.msg,{icon:5,time:1000})
-                }
-            })
-        })
-        return false
-    })
     /*
         参数解释：
         title	标题
