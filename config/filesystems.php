@@ -47,7 +47,22 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        //文章图片上传配置
+        'articles'=>[
+            //驱动 本地文件
+            'driver'=>'local',
+            //上传到服务器的位置
+            'root'=>public_path('uploads/articles'),
+        ],
+        //房源信息图片上传配置
+        'fangAttr'=>[
+            'driver'=>'local',
+            'root'=>public_path('uploads/fangAttr'),
+        ],
+        'fangowner'=>[
+            'driver'=>'local',
+            'root'=>public_path('uploads/fangowner'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

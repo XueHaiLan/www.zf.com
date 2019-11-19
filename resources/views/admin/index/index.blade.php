@@ -22,7 +22,7 @@
                 <ul class="cl">
                     <li>超级管理员</li>
                     <li class="dropDown dropDown_hover">
-                        <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        <a href="#" class="dropDown_A">{{ auth()->user()->username }} <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="{{ route('admin.edit',auth()->user()->id) }}" >个人信息</a></li>
                             <li><a href="#">切换账户</a></li>
@@ -47,16 +47,18 @@
 </header>
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
+        @foreach($data as $item)
         <dl id="menu-admin">
-            <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe62d;</i> {{ $item['name'] }}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="{{ route('admin.user') }}" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-                    <li><a data-href="{{ route('admin.role.index') }}" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-                    <li><a data-href="{{ route('admin.node.index') }}" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+                    @foreach( $item['sub'] as $items)
+                    <li><a data-href="{{ route($items['route_name']) }}" data-title="角色管理" href="javascript:void(0)">{{ $items['name'] }}</a></li>
+                        @endforeach
                 </ul>
             </dd>
         </dl>
+        @endforeach
 
     </div>
 </aside>

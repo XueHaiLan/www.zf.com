@@ -49,8 +49,8 @@
                 @endif
             </td>
             <td class="td-manage">
-                <a href="{{ route('admin.edit',$item) }}" class="label label-primary radius">修改</a>
-                <a id="del" href="{{ route('admin.del',$item) }}" class="label label-danger radius">删除</a>
+                {!! $item->editBth('admin.edit') !!}
+                {!! $item->delBth('admin.del') !!}
             </td>
         </tr>
         @endforeach

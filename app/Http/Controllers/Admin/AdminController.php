@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use mysql_xdevapi\Result;
@@ -14,13 +15,15 @@ class AdminController extends BaseController
     //用户页面展示
     public function index(Request $request)
     {
+
         $data=(new Admin())->getList($request,$this->pagesize);
         return view('admin.user.user',compact('data'));
     }
     //添加页面展示
     public function add()
     {
-        return view('admin.user.add');
+        $roleData=Role::pluck('name','id');
+        return view('admin.user.add',compact('roleData'));
     }
     //添加页面添加
     public function create(Request $request)
@@ -32,7 +35,8 @@ class AdminController extends BaseController
             'sex'=>"in:先生,女士",
             'phone'=>'nullable|min:6',
             'email'=>'nullable',
-            'truename'=>'required'
+            'truename'=>'required',
+            'role_id'=>'required'
         ]);
 
         $model=Admin::create($data);
@@ -41,8 +45,9 @@ class AdminController extends BaseController
         }
     }
     //修改页面展示
-    public function edit(int $id)
+    public function edit(int  $id)
     {
+//        dump($username);exit();
         $data=Admin::find($id);
         return view('admin.user.edit',compact('data'));
     }
@@ -72,6 +77,7 @@ class AdminController extends BaseController
     //删除用户操作
     public function delete(int $id,Request $request)
     {
+//        dd($id);
         $data=Admin::destroy($id);
 //        dump($data);exit();
 //        $data=1;

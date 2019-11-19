@@ -30,5 +30,13 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
         //权限资源路由
         Route::resource('role','RoleController');
         Route::resource('node','NodeController');
+        //文件上传路由
+        Route::post('Base/upfile','ArticleController@upfile')->name('base.upfile');
+        //文章管理资源路由
+        Route::resource('article','ArticleController');
+        //房源管理资源路由
+        Route::resource('fangattr','FangAttrController');
+        //房东管理资源路由
+        Route::resource('fangowner','FangOwnerController');
     });
 });

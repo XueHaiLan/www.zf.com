@@ -36,6 +36,17 @@
             </div>
         </div>
         <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                @foreach($roleData as $key=>$item)
+                <div class="radio-box">
+                    <input name="role_id" type="radio" id="sex-1" checked value="{{ $key }}">
+                    <label for="sex-1">{{ $item }}</label>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" class="input-text" value="{{ old('phone') }}" placeholder="" id="phone" name="phone">
@@ -64,9 +75,9 @@
 
 @section('js')
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
     $(function(){
         $('.skin-minimal input').iCheck({
@@ -77,15 +88,15 @@
 
         $("#form-admin-add").validate({
             rules:{
-                adminName:{
+                username:{
                     required:true,
                     minlength:4,
                     maxlength:16
                 },
-                password:{
+                password_confirmation:{
                     required:true,
                 },
-                password2:{
+                password:{
                     required:true,
                     equalTo: "#password"
                 },
@@ -108,19 +119,7 @@
             focusCleanup:true,
             success:"valid",
             submitHandler:function(form){
-                $(form).ajaxSubmit({
-                    type: 'post',
-                    url: "xxxxxxx" ,
-                    success: function(data){
-                        layer.msg('添加成功!',{icon:1,time:1000});
-                    },
-                    error: function(XmlHttpRequest, textStatus, errorThrown){
-                        layer.msg('error!',{icon:1,time:1000});
-                    }
-                });
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.$('.btn-refresh').click();
-                parent.layer.close(index);
+                $(form).submit()
             }
         });
     });

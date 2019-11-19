@@ -23,3 +23,21 @@ function treeLevel(array $data, int $pid = 0, string $html = '--', int $level = 
     }
     return $arr;
 }
+
+
+/**
+ * 递归成多层数组
+ * @param array $data
+ * @param int $pid
+ * @return array
+ */
+function subTree(array $data, int $pid = 0){
+    $arr = [];
+    foreach ($data as $val) {
+        if ($pid == $val['pid']) {
+            $val['sub'] = subTree($data,$val['id']);
+            $arr[] = $val;
+        }
+    }
+    return $arr;
+}

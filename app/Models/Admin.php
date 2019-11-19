@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Traits\Bth;
 class Admin extends Authenticatable
 {
     //软删除
-    use SoftDeletes;
+    use SoftDeletes,Bth;
     protected $dates=['deleted_at'];
     //黑名单
     protected $guarded=[];
-
+    //关联
+    public function role()
+    {
+        return $this->belongsTo(Role::class,'role_id');
+    }
     //过滤器
     public function setPasswordAttribute($value)
     {
