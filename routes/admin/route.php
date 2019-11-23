@@ -37,6 +37,11 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
         //房源管理资源路由
         Route::resource('fangattr','FangAttrController');
         //房东管理资源路由
+            //房东导出excel
+        Route::get('fangowner/export','FangOwnerController@export')->name('fangowner.export');
         Route::resource('fangowner','FangOwnerController');
+        //房源管理
+        Route::get('fang/city','FangController@getCity')->name('fang.city');
+        Route::resource('fang','FangController');
     });
 });

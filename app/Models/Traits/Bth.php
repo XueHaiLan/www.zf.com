@@ -47,4 +47,12 @@ trait Bth{
         }
         return '';
     }
+    //查看
+    public function showBth(string $routeName)
+    {
+        if($this->checkAuth($routeName) && request()->uername!='admin'){
+            return '<a href="'.route($routeName,$this).'" class="label label-success radius showBth">查看</a>';
+        }
+        return '';
+    }
 }

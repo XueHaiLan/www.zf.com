@@ -16,31 +16,53 @@
         <button onclick="searchBth()" type="button" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
     </div>
     </form>
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="{{ route('admin.article.create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+            <a href="{{ route('admin.article.create')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>
+            <a href="{{ route('admin.fangowner.export')}}"  class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 导出excel</a>
+            <a style="display: @if($is_show) inline-block; @else none; @endif" href="/uploads/fangownerexcel/fangowner.xlsx" class="btn btn-primary radius">下载excel</a>
+        </span> <span class="r">共有数据：<strong>54</strong> 条</span>
+    </div>
     <div class="mt-20" id="app">
         <table class="table table-border table-bordered table-bg" >
             <thead>
             <tr class="text-c">
                 {{--            <th width="25"><input type="checkbox" name="" value=""></th>--}}
                 <th width="40">ID</th>
-                <th width="150">属性名</th>
-                <th width="100">图标</th>
-                <th width="100">操作</th>
+                <th width="180">房东姓名</th>
+                <th width="180">身份证号</th>
+                <th width="180">房东性别</th>
+                <th width="180">房东年龄</th>
+                <th width="180">练习电话</th>
+                <th width="180">家庭住址</th>
+                <th width="180">邮件</th>
+                <th width="180">操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for=" item in items">
-                <td >@{{ item.id }}</td>
-                <td :style="'padding-left:'+(item.level*10)+'px'">@{{ item.name }}@{{ item.level }}</td>
+            @foreach( $data as $item)
+            <tr>
+                <td>{{ $item->id }}</td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->card }}</td>
+                <td>{{ $item->sex }}</td>
+                <td>{{ $item->age }}</td>
+                <td>{{ $item->phone }}</td>
+                <td>{{ $item->address }}</td>
+                <td>{{ $item->email }}</td>
                 <td>
-                    <img :src="item.icon" style="width: 100px">
+                    {!! $item->editBth('admin.fangowner.edit') !!}
+                    {!! $item->showBth('admin.fangowner.show') !!}
+                    {!! $item->delBth('admin.fangowner.destroy') !!}
                 </td>
-                <td v-html="item.actionBtr"></td>
             </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
 </div>
+    {{ $data->appends(request()->except('page'))->links() }}
 @endsection
 
 
@@ -50,19 +72,25 @@
 <script type="text/javascript" src="{{ staticAdminWeb() }}lib/laypage/1.2/laypage.js"></script>
 <script src="/js/vue.js"></script>
 <script type="text/javascript">
-    const app=new Vue({
-        el:'#app',
-        data:{
-            items:[],
-        },
-        mounted(){
-            $.get("{{ route('admin.fangattr.index') }}").then(ret=>{
-                // console.log(ret);
-                this.items=ret
-                console.log(this.items);
-            })
-        }
-    })
+    $('.showBth').click(function (){
+        let url=$(this).attr('href');
+        $.get(url).then(({status,msg,data})=>{
+            // console.log(data);
+           if(status== 0){
+               let content='';
+               data.forEach(item=>{
+                   content+=`<img src="${item}" style="width:150px" /> `;
+               });
+               layer.open({
+                   type: 1,
+                   skin: 'layui-layer-rim', //加上边框
+                   area: ['800px', '400px'], //宽高
+                   content
+               });
+           }
+        });
+        return false;
+    });
     /*
         参数解释：
         title	标题

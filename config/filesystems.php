@@ -54,6 +54,11 @@ return [
             //上传到服务器的位置
             'root'=>public_path('uploads/articles'),
         ],
+        //导出excel
+        'fangowenrexcel'=>[
+            'driver'=>'local',
+            'root'=>public_path('uploads/fangownerexcel'),
+        ],
         //房源信息图片上传配置
         'fangAttr'=>[
             'driver'=>'local',
@@ -62,6 +67,10 @@ return [
         'fangowner'=>[
             'driver'=>'local',
             'root'=>public_path('uploads/fangowner'),
+        ],
+        'fang'=>[
+            'driver'=>'local',
+            'root'=>public_path('uploads/fang'),
         ],
         'public' => [
             'driver' => 'local',
