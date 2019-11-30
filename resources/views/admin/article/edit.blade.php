@@ -89,7 +89,7 @@
             var uploader = WebUploader.create({
                 auto: true,// 选完文件后，是否自动上传。
                 swf: '{{ staticAdminWeb() }}lib/webuploader-0.1.5/Uploader.swf',// swf文件路径
-                server: '{{ route('admin.article.upfile') }}',// 文件接收服务端。
+                server: '{{ route('admin.base.upfile') }}',// 文件接收服务端。
                 pick: '#filePicker',// 内部根据当前运行是创建，可能是input元素，也可能是flash. 这里是div的id
                 resize:false, //不压缩img如果是jpeg,文件上传前会压缩一把再上传
                 formData:{_token:"{{ csrf_token() }}"},//表单额外值

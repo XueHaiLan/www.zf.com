@@ -26,7 +26,7 @@ class LoginController extends Controller
             return redirect(route('admin.login'))->withErrors(['error'=>"登录失败,账户或密码错误"]);
         }
         //添加邮件内容
-        Mail::send('admin/public/email',compact(''),function(Message $message){
+        Mail::send('admin/public/email',[],function(Message $message){
             //邮件标题
             $message->subject('添加用户通知');
             //收件人

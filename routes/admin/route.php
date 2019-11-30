@@ -43,5 +43,13 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
         //房源管理
         Route::get('fang/city','FangController@getCity')->name('fang.city');
         Route::resource('fang','FangController');
+        //es类
+        Route::get('es/initIndex','EsController@initIndex');
+        //预约管理
+        Route::resource('notice','NoticeController');
+        //租客列表
+        Route::resource('renting','RentingController');
+        //接口账号管理
+        Route::resource('apiuser','ApiuserController');
     });
 });

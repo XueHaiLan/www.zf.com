@@ -72,6 +72,11 @@ return [
             'driver'=>'local',
             'root'=>public_path('uploads/fang'),
         ],
+        //小程序图片上传
+        'renting'=>[
+            'driver'=>'local',
+            'root'=>public_path('uploads/renting'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -42,8 +43,8 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+            'driver' => 'session',
+            'provider' => 'apiuser',
         ],
     ],
 
@@ -70,10 +71,10 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'apiuser' => [
+             'driver' => 'eloquent',
+             'model' => App\Models\Apiuser::class,
+         ],
     ],
 
     /*

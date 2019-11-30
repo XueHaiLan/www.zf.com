@@ -9,7 +9,7 @@ trait Bth{
     private function checkAuth(string $routeName)
     {
         //获取组建中存贮的当前用户权限
-        $usernode=request()->auths;
+        $usernode=request()->auths ?? [];
         if(!in_array($routeName,$usernode) && request()->username !='admin'){
             return false;
         }

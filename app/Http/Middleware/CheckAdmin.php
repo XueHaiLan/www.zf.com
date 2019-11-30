@@ -25,7 +25,6 @@ class CheckAdmin
         $roleModel=$userModel->role;
         //获取权限role
         $nodeModel=$roleModel->nodes()->pluck('route_name','id')->toArray();
-        //过滤null字段得到真正权限
         $nodeModel=array_filter($nodeModel);
         $allowList=[
             'admin.index',

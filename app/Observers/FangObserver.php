@@ -13,6 +13,27 @@ class FangObserver
      * @param  \App\Models\Fang  $fang
      * @return void
      */
+    public function created(Fang $fang)
+    {
+        $host=config('es.host');
+        $client = \Elasticsearch\ClientBuilder::create()->setHosts($host)->build();
+        // 写文档
+        $params = [
+            'index' => 'fangs',
+            'id' => $fang->id,
+            'body' => [
+                'xiaoqu' => $fang->fang_xiaoqu,
+                'desn' => $fang->fang_desn,
+            ],
+        ];
+        $response = $client->index($params);
+    }
+    /**
+     * Handle the fang "creating" event.
+     *
+     * @param  \App\Models\Fang  $fang
+     * @return void
+     */
     public function creating(Fang $fang)
     {
 //        dd(123);

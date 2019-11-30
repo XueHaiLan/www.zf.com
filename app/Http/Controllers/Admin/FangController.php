@@ -9,8 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use GuzzleHttp\Client;
+use App\Http\Controllers\Admin\BaseController;
 
-class FangController extends Controller
+class FangController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,9 @@ class FangController extends Controller
      */
     public function index()
     {
-        return '列表';
+        $data=Fang::with('fangowner')->paginate($this->pagesize);
+//        dump($data);exit();
+        return view('admin.fang.index',compact('data'));
     }
 
     /**
@@ -45,10 +48,9 @@ class FangController extends Controller
         return view('admin.fang.add',compact('pData','attrData','fData'));
     }
 
-    public function getCity()
+    public function getCity($pid=0)
     {
-
-        $pid=\request()->get('pid',0);
+        $pid= $pid=0 ? \request()->get('pid',0) : $pid;
         return City::where('pid',$pid)->get();
     }
     /**
@@ -83,7 +85,16 @@ class FangController extends Controller
      */
     public function edit(Fang $fang)
     {
-        //
+        $pData=$this->getCity($fang->fang_province);
+        $cData=$this->getCity($fang->fang_city);
+        $rData=$this->getCity($fang->fang_region);
+        //房源属性
+        $attrData=Fangattr::all()->toArray();
+        $attrData=subTree2($attrData);
+        //房东信息
+        $fData=FangOwner::all();
+
+        return view('admin.fang.edit',compact('fang','pData','cData','rData','attrData','fData'));
     }
 
     /**
