@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => public_path(''),
         ],
         //文章图片上传配置
         'articles'=>[
@@ -79,9 +79,9 @@ return [
         ],
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
+            'root' => public_path(),
+            'url' => env('APP_URL').'/uploads',
+            'visibility' => 'uploads',
         ],
 
         's3' => [

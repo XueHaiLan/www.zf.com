@@ -1,5 +1,4 @@
-﻿<!DOCTYPE HTML>
-<html>
+﻿<html>
 <head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -38,8 +37,8 @@
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
-          <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-          <img src=""> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
+          <input name="captcha" class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
+          <img src="{{ captcha_src() }}" id="captchas"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
@@ -60,5 +59,14 @@
 <div class="footer">Copyright 你的公司名称 by H-ui.admin v3.1</div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script>
+    let src=$('#captchas').attr('src');
+    $('#captchas').click(function(){
+        $(this).attr('src',src + '&_a=' + Math.random());
+    })
+    $('#kanbuq').click(function(){
+        $('#captchas').attr('src',src + '&_a=' + Math.random());
+    })
+</script>
 </body>
 </html>

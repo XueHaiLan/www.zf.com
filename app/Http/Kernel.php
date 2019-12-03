@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckApi;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -64,6 +65,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         //登录检查
         'checkadmin'=>\App\Http\Middleware\CheckAdmin::class,
+        //小程序登录验证
+        'checkapi'=>\App\Http\Middleware\CheckApi::class
     ];
 
     /**

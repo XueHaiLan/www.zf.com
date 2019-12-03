@@ -16,8 +16,10 @@ class LoginController extends Controller
     public function logins(Request $request){
         $data=$this->validate($request,[
             'username'=>'required',
-            'password'=>'required'
+            'password'=>'required',
+            'captcha'=>'required|captcha'
         ]);
+        unset($data['captcha']);
 //        dump($data);
         $bool=auth()->attempt($data);
 //        dd($bool);

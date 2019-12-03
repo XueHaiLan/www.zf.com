@@ -24,6 +24,8 @@ Route::group(['prefix'=>'v1','namespace'=>'Api'],function (){
     Route::post('userinfo','WxloginController@userInfo');
     //图片上传
     Route::post('upfile','WxloginController@upfile');
+    //删除图片
+    Route::post('delfile','WxloginController@delfile');
     //用户修改信息
     Route::put('editrenting','RentingController@editrenting');
     Route::get('renting','RentingController@show');
@@ -51,6 +53,8 @@ Route::group(['prefix'=>'v1','namespace'=>'Api'],function (){
     Route::get('fang/list','FavController@list');
     //房源属性
     Route::get('fang/attr','FavController@fangAttr');
+    //es模糊查询
+    Route::get('fang/search','FangController@search');
 });
 
 Route::get('login',function (){
@@ -66,7 +70,7 @@ Route::get('login',function (){
 //    dump($bool);
     if(!$bool){
         //登录失败处理
-        throw new LoginException('登录失败',1);
+        return response()->json(['status'=>100,'msg'=>'登录验证异常','data'=>[]],401);
     }
     //进行签名比较
     $token=auth()->guard('api')->user()->token;
@@ -74,7 +78,7 @@ Route::get('login',function (){
     $sign=md5($sign);
 //    return $sign;
     if($sign !==$signate){
-        throw new LoginException('登录异常',2);
+        return response()->json(['status'=>100,'msg'=>'登录验证异常','data'=>[]],401);
     }
     return ['status'=>0,'msg'=>'登录陈成功'];
 });

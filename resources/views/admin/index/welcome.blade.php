@@ -4,6 +4,7 @@
     <p class="f-20 text-success">欢迎使用H-ui.admin <span class="f-14">v3.1</span>后台模版！</p>
     <p>登录次数：18 </p>
     <p>上次登录IP：222.35.131.79.1  上次登录时间：2014-6-14 11:19:55</p>
+    <div id="main" style="width: 600px; height: 500px;"></div>
     <table class="table table-border table-bordered table-bg">
         <thead>
         <tr>
@@ -171,4 +172,45 @@
     </div>
 </footer>
     @endsection
+@section('js')
+<script src="/js/echarts.min.js"></script>
+<script>
+    var mychars=echarts.init(document.getElementById('main'));
+    var option = {
+        title : {
+            text: '房屋已租待租比例',
+            subtext: '纯属虚构',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: [{!! $legent !!}]
+        },
+        series : [
+            {
+                name: '租房比例',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data: {!! $data !!},
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    mychars.setOption(option);
+</script>
 
+
+
+@endsection

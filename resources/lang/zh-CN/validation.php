@@ -116,7 +116,7 @@ return [
     'uuid'                 => ':attribute 必须是有效的 UUID。',
     // 错误提示
     'mytel'                 => ':attribute 号码不合法。',
-    'captcha' => '验证码不正确。',
+    'captcha'               => ':attribute 不正确。',
 
     /*
     |--------------------------------------------------------------------------
@@ -151,6 +151,7 @@ return [
         'name'                  => '名称',
         'username'              => '用户名',
         'email'                 => '邮箱',
+        'captcha'               => '验证码',
         'first_name'            => '名',
         'last_name'             => '姓',
         'password'              => '密码',
